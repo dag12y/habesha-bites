@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") // allow requests from your React frontend
 public class AuthController {
     private final AuthService authService;
 
@@ -25,8 +25,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
-        String message = authService.login(request.getEmail(), request.getPassword());
-        boolean success = message.equals("Login successful");
-        return new AuthResponse(success, message);
+        String token = authService.loginWithToken(request.getEmail(), request.getPassword());
+        if (token != null) {
+            return new AuthResponse(true, "Login successful", token);
+        } else {
+            return new AuthResponse(false, "Invalid credentials");
+        }
     }
+
 }
