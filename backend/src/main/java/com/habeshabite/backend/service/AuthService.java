@@ -3,17 +3,21 @@ package com.habeshabite.backend.service;
 import com.habeshabite.backend.dto.RegisterRequest;
 import com.habeshabite.backend.entity.User;
 import com.habeshabite.backend.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.habeshabite.backend.security.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final JwtUtil jwtUtil;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, JwtUtil jwtUtil, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String register(RegisterRequest request) {
@@ -24,7 +28,9 @@ public class AuthService {
         User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone()); // new
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(User.Role.USER); // default role
 
         userRepository.save(user);
         return "User registered successfully";
@@ -37,4 +43,15 @@ public class AuthService {
                         : "Invalid credentials")
                 .orElse("User not found");
     }
+
+    public String loginWithToken(String email, String password) {
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    if (passwordEncoder.matches(password, user.getPassword())) {
+                        return jwtUtil.generateToken(email); // generate JWT
+                    }
+                    return null;
+                }).orElse(null);
+    }
 }
+
