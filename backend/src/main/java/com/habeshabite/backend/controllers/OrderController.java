@@ -1,10 +1,12 @@
 package com.habeshabite.backend.controllers;
 
+import com.habeshabite.backend.dto.ErrorResponse;
 import com.habeshabite.backend.dto.OrderRequest;
 import com.habeshabite.backend.dto.OrderResponse;
 import com.habeshabite.backend.dto.StatusUpdateRequest;
 import com.habeshabite.backend.entity.Order;
 import com.habeshabite.backend.service.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -91,14 +93,32 @@ public class OrderController {
 
     // PUT /api/orders/{id}/status - Update order status (ADMIN only)
     @PutMapping("/{id}/status")
-    public ResponseEntity<OrderResponse> updateOrderStatus(
+    public ResponseEntity<?> updateOrderStatus(
             @PathVariable Long id,
             @RequestBody StatusUpdateRequest request) {
         try {
+            if (request == null) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Invalid request", "Request body is required"));
+            }
+            
+            if (request.getStatus() == null) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Invalid status", "Status is required"));
+            }
+            
             OrderResponse order = orderService.updateOrderStatus(id, request.getStatus());
             return ResponseEntity.ok(order);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Invalid status", e.getMessage()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Error", e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Server error", "Failed to update order status: " + e.getMessage()));
         }
     }
 
