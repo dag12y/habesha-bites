@@ -25,15 +25,42 @@ public class AuthService {
             return "User already exists";
         }
 
+        // Validate required fields
+        if (request.getPhone() == null || request.getPhone().trim().isEmpty()) {
+            return "Phone number is required";
+        }
+
         User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone()); // new
+        user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(User.Role.USER); // default role
 
         userRepository.save(user);
         return "User registered successfully";
+    }
+
+    public String registerWithToken(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            return null; // User already exists
+        }
+
+        // Validate required fields
+        if (request.getPhone() == null || request.getPhone().trim().isEmpty()) {
+            return null; // Phone number is required
+        }
+
+        User user = new User();
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(User.Role.USER); // default role
+
+        userRepository.save(user);
+        // Generate token after successful registration
+        return jwtUtil.generateToken(user);
     }
 
     public String login(String email, String password) {
@@ -48,10 +75,11 @@ public class AuthService {
         return userRepository.findByEmail(email)
                 .map(user -> {
                     if (passwordEncoder.matches(password, user.getPassword())) {
-                        return jwtUtil.generateToken(email); // generate JWT
+                        return jwtUtil.generateToken(user); // pass the User object
                     }
                     return null;
                 }).orElse(null);
     }
+
 }
 
