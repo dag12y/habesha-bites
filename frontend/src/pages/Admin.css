@@ -1,234 +1,249 @@
 .admin-page {
-  min-height: calc(100vh - 200px);
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+    min-height: calc(100vh - 200px);
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .admin-page h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
 }
 
 .admin-tabs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f0f0f0;
 }
 
 .admin-tabs button {
-  padding: 1rem 2rem;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.3s;
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .admin-tabs button:hover {
-  color: #667eea;
+    color: #667eea;
 }
 
 .admin-tabs button.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+    color: #667eea;
+    border-bottom-color: #667eea;
 }
 
 .orders-table {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .orders-table table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .orders-table th {
-  background: #f8f9fa;
-  padding: 1rem;
-  text-align: left;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 2px solid #e0e0e0;
+    background: #f8f9fa;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+
+    .delivery-cell {
+        max-width: 260px;
+        white-space: pre-wrap;
+    }
+
+    .delivery-address {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .delivery-phone {
+        color: #555;
+        margin-top: 4px;
+        font-size: 0.95rem;
+    }
 }
 
 .orders-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #f0f0f0;
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .orders-table tr:hover {
-  background: #f8f9fa;
+    background: #f8f9fa;
 }
 
 .status-select {
-  padding: 0.5rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  min-width: 150px;
+    padding: 0.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    min-width: 150px;
 }
 
 .status-select:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .updating-indicator {
-  display: inline-block;
-  margin-left: 0.5rem;
-  font-size: 0.875rem;
-  color: #667eea;
-  font-style: italic;
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    color: #667eea;
+    font-style: italic;
 }
 
 .cancel-btn {
-  padding: 0.5rem 1rem;
-  background: #ff4757;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
+    padding: 0.5rem 1rem;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
 }
 
 .cancel-btn:hover {
-  background: #ee3742;
+    background: #ee3742;
 }
 
 .add-food-btn {
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 2rem;
-  transition: transform 0.2s;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
 }
 
 .add-food-btn:hover {
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
 .foods-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .food-item {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .food-info h3 {
-  margin: 0 0 0.5rem 0;
-  color: #333;
+    margin: 0 0 0.5rem 0;
+    color: #333;
 }
 
 .food-info p {
-  color: #666;
-  margin: 0 0 1rem 0;
+    color: #666;
+    margin: 0 0 1rem 0;
 }
 
 .food-meta {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.9rem;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
 }
 
 .food-meta span {
-  padding: 0.25rem 0.75rem;
-  background: #f0f0f0;
-  border-radius: 15px;
-  color: #666;
+    padding: 0.25rem 0.75rem;
+    background: #f0f0f0;
+    border-radius: 15px;
+    color: #666;
 }
 
 .food-meta .available {
-  background: #d4edda;
-  color: #155724;
+    background: #d4edda;
+    color: #155724;
 }
 
 .food-meta .unavailable {
-  background: #f8d7da;
-  color: #721c24;
+    background: #f8d7da;
+    color: #721c24;
 }
 
 .food-actions {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 1rem;
 }
 
 .edit-btn,
 .delete-btn {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
 }
 
 .edit-btn {
-  background: #667eea;
-  color: white;
+    background: #667eea;
+    color: white;
 }
 
 .delete-btn {
-  background: #ff4757;
-  color: white;
+    background: #ff4757;
+    color: white;
 }
 
 .edit-btn:hover,
 .delete-btn:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .loading,
 .error,
 .no-data {
-  text-align: center;
-  padding: 3rem;
-  font-size: 1.2rem;
-  color: #666;
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #666;
 }
 
 .error {
-  color: #ff4757;
+    color: #ff4757;
 }
 
 @media (max-width: 968px) {
-  .orders-table {
-    overflow-x: auto;
-  }
+    .orders-table {
+        overflow-x: auto;
+    }
 
-  .food-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+    .food-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 
-  .food-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
+    .food-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
 }
-

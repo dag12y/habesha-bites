@@ -1,11 +1,12 @@
 package com.habeshabite.backend.config;
 
+import com.habeshabite.backend.security.CustomOAuth2UserService;
 import com.habeshabite.backend.security.JwtFilter;
+import com.habeshabite.backend.security.OAuth2AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -18,9 +19,15 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public SecurityConfig(JwtFilter jwtFilter,
+            CustomOAuth2UserService customOAuth2UserService,
+            OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) {
         this.jwtFilter = jwtFilter;
+        this.customOAuth2UserService = customOAuth2UserService;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
     }
 
     @Bean
@@ -46,6 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // allow all OPTIONS requests for CORS
                                                                                 // preflight
+                        .requestMatchers("/oauth2/**", "/login/oauth2/**", "/oauth2/authorization/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll() // allow all auth endpoints
                         .requestMatchers(HttpMethod.GET, "/api/foods/**").permitAll() // allow public access to view
                                                                                       // foods
@@ -67,12 +75,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated() // authenticated users can
                                                                                           // view profiles
                         .anyRequest().authenticated()) // everything else requires authentication
+                .oauth2Login(oauth -> oauth
+                        .authorizationEndpoint(authorization -> authorization.baseUri("/oauth2/authorization"))
+                        .redirectionEndpoint(redirection -> redirection.baseUri("/login/oauth2/code/*"))
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .successHandler(oAuth2AuthenticationSuccessHandler))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

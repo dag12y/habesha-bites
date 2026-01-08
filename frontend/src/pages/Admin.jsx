@@ -192,6 +192,7 @@ const Admin = () => {
                                         <th>Order ID</th>
                                         <th>Customer</th>
                                         <th>Items</th>
+                                        <th>Delivery</th>
                                         <th>Total</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -210,8 +211,19 @@ const Admin = () => {
                                                     )
                                                     .join(", ")}
                                             </td>
+                                            <td className="delivery-cell">
+                                                <div className="delivery-address">
+                                                    {order.deliveryAddress ||
+                                                        "No address provided"}
+                                                </div>
+                                                <div className="delivery-phone">
+                                                    {order.phoneNumber ||
+                                                        "No phone"}
+                                                </div>
+                                            </td>
                                             <td>
-                                                ${order.totalAmount.toFixed(2)}
+                                                {order.totalAmount.toFixed(2)}{" "}
+                                                Birr
                                             </td>
                                             <td>
                                                 <select
@@ -296,7 +308,7 @@ const Admin = () => {
                                         <p>{food.description}</p>
                                         <div className="food-meta">
                                             <span>
-                                                ${food.price.toFixed(2)}
+                                                {food.price.toFixed(2)} Birr
                                             </span>
                                             <span>{food.category}</span>
                                             <span

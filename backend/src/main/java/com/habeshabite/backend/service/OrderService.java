@@ -11,6 +11,7 @@ import com.habeshabite.backend.repository.OrderRepository;
 import com.habeshabite.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,10 +34,27 @@ public class OrderService {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (request == null || request.getItems() == null || request.getItems().isEmpty()) {
+            throw new RuntimeException("At least one item is required to place an order");
+        }
+
+        if (!StringUtils.hasText(request.getDeliveryAddress())) {
+            throw new RuntimeException("Delivery address is required");
+        }
+
+        String phoneFromRequest = request.getPhoneNumber();
+        String phoneToUse = StringUtils.hasText(phoneFromRequest)
+                ? phoneFromRequest.trim()
+                : user.getPhone();
+
+        if (!StringUtils.hasText(phoneToUse)) {
+            throw new RuntimeException("Phone number is required");
+        }
+
         Order order = new Order();
         order.setUser(user);
-        order.setDeliveryAddress(request.getDeliveryAddress());
-        order.setPhoneNumber(request.getPhoneNumber() != null ? request.getPhoneNumber() : user.getPhone());
+        order.setDeliveryAddress(request.getDeliveryAddress().trim());
+        order.setPhoneNumber(phoneToUse);
         order.setStatus(Order.OrderStatus.PENDING);
 
         double totalAmount = 0.0;
@@ -142,8 +160,7 @@ public class OrderService {
                         item.getFood().getId(),
                         item.getFood().getName(),
                         item.getQuantity(),
-                        item.getPrice()
-                ))
+                        item.getPrice()))
                 .collect(Collectors.toList());
 
         return new OrderResponse(
@@ -156,8 +173,6 @@ public class OrderService {
                 order.getDeliveryAddress(),
                 order.getPhoneNumber(),
                 order.getCreatedAt(),
-                order.getUpdatedAt()
-        );
+                order.getUpdatedAt());
     }
 }
-
