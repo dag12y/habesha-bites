@@ -32,7 +32,7 @@ public class SecurityConfig {
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
@@ -44,20 +44,28 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable()) // disable CSRF for POST requests
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // allow all OPTIONS requests for CORS preflight
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // allow all OPTIONS requests for CORS
+                                                                                // preflight
                         .requestMatchers("/api/auth/**").permitAll() // allow all auth endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/foods/**").permitAll() // allow public access to view foods
+                        .requestMatchers(HttpMethod.GET, "/api/foods/**").permitAll() // allow public access to view
+                                                                                      // foods
                         .requestMatchers(HttpMethod.POST, "/api/foods/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/foods/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/foods/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/orders").authenticated() // authenticated users can create orders
-                        .requestMatchers(HttpMethod.GET, "/api/orders/my-orders").authenticated() // users can view their own orders
-                        .requestMatchers(HttpMethod.GET, "/api/orders/{id}").authenticated() // users can view their own order
-                        .requestMatchers(HttpMethod.PUT, "/api/orders/{id}/cancel").authenticated() // users can cancel their own orders
-                        .requestMatchers(HttpMethod.GET, "/api/orders").hasAuthority("ADMIN") // admin only for all orders
+                        .requestMatchers(HttpMethod.POST, "/api/orders").authenticated() // authenticated users can
+                                                                                         // create orders
+                        .requestMatchers(HttpMethod.GET, "/api/orders/my-orders").authenticated() // users can view
+                                                                                                  // their own orders
+                        .requestMatchers(HttpMethod.GET, "/api/orders/*").authenticated() // users can view their own
+                                                                                          // order
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/cancel").authenticated() // users can cancel
+                                                                                                 // their own orders
+                        .requestMatchers(HttpMethod.GET, "/api/orders").hasAuthority("ADMIN") // admin only for all
+                                                                                              // orders
                         .requestMatchers(HttpMethod.GET, "/api/orders/status/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/orders/**/status").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated() // authenticated users can view profiles
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/status").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated() // authenticated users can
+                                                                                          // view profiles
                         .anyRequest().authenticated()) // everything else requires authentication
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
