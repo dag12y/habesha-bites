@@ -69,7 +69,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return userRepository.save(user);
     }
 
-    @SuppressWarnings("unchecked")
     private String getAttribute(Map<String, Object> attributes, String key) {
         Object value = attributes.get(key);
         if (value == null) {

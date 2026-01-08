@@ -60,8 +60,12 @@ public class OrderService {
         double totalAmount = 0.0;
 
         for (OrderItemRequest itemRequest : request.getItems()) {
-            Food food = foodRepository.findById(itemRequest.getFoodId())
-                    .orElseThrow(() -> new RuntimeException("Food not found with id: " + itemRequest.getFoodId()));
+            Long foodId = itemRequest.getFoodId();
+            if (foodId == null) {
+                throw new RuntimeException("Food ID cannot be null");
+            }
+            Food food = foodRepository.findById(foodId)
+                    .orElseThrow(() -> new RuntimeException("Food not found with id: " + foodId));
 
             if (!food.getIsAvailable()) {
                 throw new RuntimeException("Food item " + food.getName() + " is not available");
@@ -93,6 +97,9 @@ public class OrderService {
     }
 
     public OrderResponse getOrderById(Long orderId, String userEmail) {
+        if (orderId == null) {
+            throw new RuntimeException("Order ID cannot be null");
+        }
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
@@ -121,6 +128,9 @@ public class OrderService {
 
     @Transactional
     public OrderResponse updateOrderStatus(Long orderId, Order.OrderStatus newStatus) {
+        if (orderId == null) {
+            throw new RuntimeException("Order ID cannot be null");
+        }
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
@@ -132,6 +142,9 @@ public class OrderService {
 
     @Transactional
     public boolean cancelOrder(Long orderId, String userEmail) {
+        if (orderId == null) {
+            throw new RuntimeException("Order ID cannot be null");
+        }
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 

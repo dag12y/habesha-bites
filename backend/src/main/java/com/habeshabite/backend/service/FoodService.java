@@ -7,6 +7,7 @@ import com.habeshabite.backend.repository.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +38,9 @@ public class FoodService {
     }
 
     public FoodResponse getFoodById(Long id) {
+        if (id == null) {
+            return null;
+        }
         return foodRepository.findById(id)
                 .map(this::mapToResponse)
                 .orElse(null);
@@ -56,6 +60,9 @@ public class FoodService {
     }
 
     public FoodResponse updateFood(Long id, FoodRequest request) {
+        if (id == null) {
+            return null;
+        }
         return foodRepository.findById(id)
                 .map(existing -> {
                     existing.setName(request.getName());
@@ -73,17 +80,28 @@ public class FoodService {
     }
 
     public boolean deleteFood(Long id) {
+        if (id == null) {
+            return false;
+        }
         return foodRepository.findById(id)
                 .map(food -> {
-                    foodRepository.delete(food);
-                    return true;
+                    if (food != null) {
+                        foodRepository.delete(food);
+                        return true;
+                    }
+                    return false;
                 })
                 .orElse(false);
     }
 
     private FoodResponse mapToResponse(Food food) {
+        Objects.requireNonNull(food, "Food cannot be null");
+        Long foodId = food.getId();
+        if (foodId == null) {
+            foodId = 0L;
+        }
         return new FoodResponse(
-                food.getId(),
+                foodId,
                 food.getName(),
                 food.getDescription(),
                 food.getPrice(),

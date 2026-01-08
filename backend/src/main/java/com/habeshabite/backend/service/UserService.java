@@ -27,15 +27,24 @@ public class UserService {
     }
 
     public UserResponse getUserById(Long id) {
+        if (id == null) {
+            return null;
+        }
         return userRepository.findById(id)
-                .map(user -> new UserResponse(
-                        user.getId(),
-                        user.getFullName(),
-                        user.getEmail(),
-                        user.getPhone(),
-                        user.getRole(),
-                        user.getCreatedAt()
-                ))
+                .map(user -> {
+                    Long userId = user.getId();
+                    if (userId == null) {
+                        userId = 0L;
+                    }
+                    return new UserResponse(
+                            userId,
+                            user.getFullName(),
+                            user.getEmail(),
+                            user.getPhone(),
+                            user.getRole(),
+                            user.getCreatedAt()
+                    );
+                })
                 .orElse(null);
     }
 }
