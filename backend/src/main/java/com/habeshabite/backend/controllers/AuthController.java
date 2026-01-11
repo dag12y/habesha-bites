@@ -18,9 +18,15 @@ public class AuthController {
 
     @PostMapping("/register")
     public AuthResponse register(@RequestBody RegisterRequest request) {
-        String message = authService.register(request);
-        boolean success = message.equals("User registered successfully");
-        return new AuthResponse(success, message);
+        String token = authService.registerWithToken(request);
+        if (token != null) {
+            return new AuthResponse(true, "User registered successfully", token);
+        } else {
+            // If token is null, check what went wrong
+            String message = authService.register(request);
+            boolean success = message.equals("User registered successfully");
+            return new AuthResponse(success, message);
+        }
     }
 
     @PostMapping("/login")
