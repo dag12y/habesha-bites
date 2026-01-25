@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "foods")
+@jakarta.persistence.Table(name = "foods")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

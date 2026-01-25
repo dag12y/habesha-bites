@@ -3,9 +3,33 @@
   line-height: 1.5;
   font-weight: 400;
 
+  /* Ethiopian Restaurant Color Palette */
+  --color-primary: #1F4D2B;        /* Deep Ethiopian green */
+  --color-secondary: #C9A227;     /* Warm gold/mustard */
+  --color-accent: #8B1E1E;        /* Deep berbere red */
+  --color-background: #F5EFE6;    /* Warm beige */
+  --color-text: #2B2B2B;          /* Dark brown/near black */
+  
+  /* Color variations for hover states and gradients */
+  --color-primary-dark: #15371F;
+  --color-primary-light: #2A6B3D;
+  --color-secondary-dark: #A0821F;
+  --color-secondary-light: #E5B83A;
+  --color-accent-dark: #6B1616;
+  --color-accent-light: #A82828;
+  --color-background-light: #FDFBF8;
+  --color-text-light: #666666;
+  --color-text-lighter: #999999;
+  
+  /* White and grays for contrast */
+  --color-white: #FFFFFF;
+  --color-gray-light: #F0F0F0;
+  --color-gray-medium: #E0E0E0;
+  --color-gray-dark: #CCCCCC;
+
   color-scheme: light;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #ffffff;
+  color: var(--color-text);
+  background-color: var(--color-background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,6 +47,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 #root {

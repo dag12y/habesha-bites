@@ -10,19 +10,19 @@
 
 .main-content {
   flex: 1;
-  background: #f8f9fa;
+  background: var(--color-background);
 }
 
 .loading {
   text-align: center;
   padding: 3rem;
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-text-light);
 }
 
 .error {
   text-align: center;
   padding: 2rem;
-  color: #ff4757;
+  color: var(--color-accent);
   font-size: 1.1rem;
 }

@@ -62,6 +62,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/foods/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/foods/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/foods/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/bookings/tables").permitAll() // allow public access to view tables
+                        .requestMatchers(HttpMethod.POST, "/api/bookings").authenticated() // authenticated users can create bookings
+                        .requestMatchers(HttpMethod.GET, "/api/bookings/my-bookings").authenticated() // users can view their own bookings
+                        .requestMatchers(HttpMethod.PUT, "/api/bookings/*/cancel").authenticated() // users can cancel their own bookings
+                        .requestMatchers(HttpMethod.GET, "/api/bookings").hasAuthority("ADMIN") // admin only for all bookings
                         .requestMatchers(HttpMethod.POST, "/api/orders").authenticated() // authenticated users can
                                                                                          // create orders
                         .requestMatchers(HttpMethod.GET, "/api/orders/my-orders").authenticated() // users can view
@@ -74,6 +79,9 @@ public class SecurityConfig {
                                                                                               // orders
                         .requestMatchers(HttpMethod.GET, "/api/orders/status/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/orders/*/status").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/assign-driver").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/unassign-driver").hasAuthority("ADMIN")
+                        .requestMatchers("/api/drivers/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated() // authenticated users can
                                                                                           // view profiles
                         .anyRequest().authenticated()) // everything else requires authentication
@@ -81,7 +89,17 @@ public class SecurityConfig {
                         .authorizationEndpoint(authorization -> authorization.baseUri("/oauth2/authorization"))
                         .redirectionEndpoint(redirection -> redirection.baseUri("/login/oauth2/code/*"))
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                        .successHandler(oAuth2AuthenticationSuccessHandler))
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                        .failureHandler((request, response, exception) -> {
+                            try {
+                                String errorMessage = exception.getMessage();
+                                String redirectUri = "http://localhost:3000/oauth2/callback?error=" + 
+                                    java.net.URLEncoder.encode(errorMessage != null ? errorMessage : "OAuth2 authentication failed", "UTF-8");
+                                response.sendRedirect(redirectUri);
+                            } catch (Exception e) {
+                                response.sendError(500, "OAuth2 error handling failed");
+                            }
+                        }))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

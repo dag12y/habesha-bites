@@ -4,9 +4,10 @@ import './Home.css';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
-
+console.log('home page called!@!!!!!!!!!');
   return (
     <div className="home">
+      
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">Welcome to Habesha Bites</h1>
@@ -17,6 +18,11 @@ const Home = () => {
             <Link to="/menu" className="btn btn-primary">
               View Menu
             </Link>
+            {isAuthenticated && (
+              <Link to="/book-table" className="btn btn-secondary">
+                Book a Table
+              </Link>
+            )}
             {!isAuthenticated && (
               <Link to="/register" className="btn btn-secondary">
                 Get Started

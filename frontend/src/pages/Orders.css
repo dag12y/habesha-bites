@@ -8,7 +8,7 @@
 .orders-page h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .orders-list {
@@ -35,11 +35,11 @@
 
 .order-header h3 {
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color: var(--color-text);
 }
 
 .order-date {
-  color: #666;
+  color: var(--color-text-light);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -75,13 +75,13 @@
 }
 
 .item-quantity {
-  color: #666;
+  color: var(--color-text-light);
   margin: 0 1rem;
 }
 
 .item-price {
   font-weight: 600;
-  color: #667eea;
+  color: var(--color-primary);
 }
 
 .order-footer {
@@ -92,18 +92,18 @@
 .order-total {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .order-address {
-  color: #666;
+  color: var(--color-text-light);
   margin-bottom: 1rem;
 }
 
 .cancel-order-btn {
   padding: 0.75rem 1.5rem;
-  background: #ff4757;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-white);
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -112,7 +112,7 @@
 }
 
 .cancel-order-btn:hover {
-  background: #ee3742;
+  background: var(--color-accent-dark);
 }
 
 .no-orders {
@@ -123,12 +123,12 @@
 .no-orders h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .no-orders p {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-text-light);
 }
 
 .loading,
@@ -139,7 +139,7 @@
 }
 
 .error {
-  color: #ff4757;
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {

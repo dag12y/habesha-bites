@@ -1,5 +1,6 @@
 package com.habeshabite.backend.controllers;
 
+import com.habeshabite.backend.dto.AssignDriverRequest;
 import com.habeshabite.backend.dto.ErrorResponse;
 import com.habeshabite.backend.dto.OrderRequest;
 import com.habeshabite.backend.dto.OrderResponse;
@@ -119,6 +120,31 @@ public class OrderController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("Server error", "Failed to update order status: " + e.getMessage()));
+        }
+    }
+
+    // PUT /api/orders/{id}/assign-driver - Assign driver to order (ADMIN)
+    @PutMapping("/{id}/assign-driver")
+    public ResponseEntity<?> assignDriver(@PathVariable Long id, @RequestBody AssignDriverRequest request) {
+        try {
+            if (request == null || request.getDriverId() == null) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Error", "Driver ID is required"));
+            }
+            OrderResponse order = orderService.assignDriverToOrder(id, request.getDriverId());
+            return ResponseEntity.ok(order);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Error", e.getMessage()));
+        }
+    }
+
+    // PUT /api/orders/{id}/unassign-driver - Unassign driver from order (ADMIN)
+    @PutMapping("/{id}/unassign-driver")
+    public ResponseEntity<?> unassignDriver(@PathVariable Long id) {
+        try {
+            OrderResponse order = orderService.unassignDriverFromOrder(id);
+            return ResponseEntity.ok(order);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Error", e.getMessage()));
         }
     }
 

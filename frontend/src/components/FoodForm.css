@@ -32,14 +32,14 @@
 
 .food-form-header h2 {
   margin: 0;
-  color: #333;
+  color: var(--color-text);
 }
 
 .close-btn {
   background: none;
   border: none;
   font-size: 2rem;
-  color: #666;
+  color: var(--color-text-light);
   cursor: pointer;
   width: 40px;
   height: 40px;
@@ -66,7 +66,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
 }
 
 .form-group input,
@@ -83,17 +83,17 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary);
 }
 
 .form-group input.error,
 .form-group textarea.error {
-  border-color: #ff4757;
+  border-color: var(--color-accent);
 }
 
 .error-message {
   display: block;
-  color: #ff4757;
+  color: var(--color-accent);
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
@@ -137,8 +137,8 @@
 }
 
 .cancel-btn {
-  background: #f0f0f0;
-  color: #333;
+  background: var(--color-gray-light);
+  color: var(--color-text);
 }
 
 .cancel-btn:hover {
@@ -146,12 +146,13 @@
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-white);
+  transition: background 0.2s, transform 0.2s;
 }
 
 .save-btn:hover {
-  opacity: 0.9;
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
 }
 

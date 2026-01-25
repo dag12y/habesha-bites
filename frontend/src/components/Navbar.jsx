@@ -35,6 +35,11 @@ const Navbar = () => {
           {isAuthenticated ? (
             <>
               <li>
+                <Link to="/book-table" className="navbar-link">
+                  Book Table
+                </Link>
+              </li>
+              <li>
                 <Link to="/cart" className="navbar-link cart-link">
                   Cart
                   {getTotalItems() > 0 && (

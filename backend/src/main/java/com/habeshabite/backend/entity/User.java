@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
+@jakarta.persistence.Table(name = "users", uniqueConstraints = { @jakarta.persistence.UniqueConstraint(columnNames = "email") })
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

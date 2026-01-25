@@ -63,12 +63,32 @@ export const orderAPI = {
   getByStatus: (status) => api.get(`/orders/status/${status}`),
   updateStatus: (id, status) => api.put(`/orders/${id}/status`, { status }),
   cancel: (id) => api.put(`/orders/${id}/cancel`),
+  assignDriver: (orderId, driverId) => api.put(`/orders/${orderId}/assign-driver`, { driverId }),
+  unassignDriver: (orderId) => api.put(`/orders/${orderId}/unassign-driver`),
+};
+
+// Driver API
+export const driverAPI = {
+  getAll: () => api.get('/drivers'),
+  getAvailable: () => api.get('/drivers/available'),
+  create: (data) => api.post('/drivers', data),
+  update: (id, data) => api.put(`/drivers/${id}`, data),
+  delete: (id) => api.delete(`/drivers/${id}`),
 };
 
 // User API
 export const userAPI = {
   getProfile: () => api.get('/users/profile'),
   getById: (id) => api.get(`/users/${id}`),
+};
+
+// Booking API
+export const bookingAPI = {
+  getTables: () => api.get('/bookings/tables'),
+  createBooking: (data) => api.post('/bookings', data),
+  getMyBookings: () => api.get('/bookings/my-bookings'),
+  cancelBooking: (id) => api.put(`/bookings/${id}/cancel`),
+  getAllBookings: () => api.get('/bookings'),
 };
 
 export default api;
