@@ -22,5 +22,9 @@ public class OrderResponse {
     private String phoneNumber;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Long driverId;
+    private String driverName;
+    private String driverEmail;
+    private String driverPhone;
 }
 

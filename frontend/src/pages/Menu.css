@@ -12,13 +12,13 @@
 
 .menu-header h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: var(--color-text);
   margin-bottom: 0.5rem;
 }
 
 .menu-header p {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-text-light);
 }
 
 .category-filter {
@@ -31,9 +31,9 @@
 
 .category-btn {
   padding: 0.75rem 1.5rem;
-  border: 2px solid #667eea;
-  background: white;
-  color: #667eea;
+  border: 2px solid var(--color-primary);
+  background: var(--color-white);
+  color: var(--color-primary);
   border-radius: 25px;
   cursor: pointer;
   font-weight: 600;
@@ -41,13 +41,18 @@
 }
 
 .category-btn:hover {
-  background: #f0f0f0;
+  background: var(--color-gray-light);
+  border-color: var(--color-primary-dark);
 }
 
 .category-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: transparent;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.category-btn.active:hover {
+  background: var(--color-primary-dark);
 }
 
 .foods-grid {
@@ -62,11 +67,11 @@
   text-align: center;
   padding: 3rem;
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-text-light);
 }
 
 .error {
-  color: #ff4757;
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {

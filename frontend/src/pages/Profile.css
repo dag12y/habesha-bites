@@ -8,7 +8,7 @@
 .profile-page h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .profile-card {
@@ -29,8 +29,8 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +41,7 @@
 
 .profile-header h2 {
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color: var(--color-text);
   font-size: 2rem;
 }
 
@@ -55,13 +55,13 @@
 }
 
 .role-badge.admin {
-  background: #667eea;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 .role-badge.user {
-  background: #f0f0f0;
-  color: #666;
+  background: var(--color-gray-light);
+  color: var(--color-text-light);
 }
 
 .profile-info {
@@ -79,7 +79,7 @@
 
 .info-item label {
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-light);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -87,15 +87,15 @@
 
 .info-item p {
   font-size: 1.1rem;
-  color: #333;
+  color: var(--color-text);
   margin: 0;
 }
 
 .logout-btn {
   width: 100%;
   padding: 1rem;
-  background: #ff4757;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-white);
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
@@ -105,7 +105,7 @@
 }
 
 .logout-btn:hover {
-  background: #ee3742;
+  background: var(--color-accent-dark);
 }
 
 .loading,
@@ -116,7 +116,7 @@
 }
 
 .error {
-  color: #ff4757;
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {

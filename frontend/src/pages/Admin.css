@@ -8,7 +8,7 @@
 .admin-page h1 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #333;
+    color: var(--color-text);
 }
 
 .admin-tabs {
@@ -25,18 +25,18 @@
     border-bottom: 3px solid transparent;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #666;
+    color: var(--color-text-light);
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .admin-tabs button:hover {
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 .admin-tabs button.active {
-    color: #667eea;
-    border-bottom-color: #667eea;
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
 }
 
 .orders-table {
@@ -52,12 +52,12 @@
 }
 
 .orders-table th {
-    background: #f8f9fa;
+    background: var(--color-gray-light);
     padding: 1rem;
     text-align: left;
     font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #e0e0e0;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-gray-medium);
 
     .delivery-cell {
         max-width: 260px;
@@ -66,11 +66,11 @@
 
     .delivery-address {
         font-weight: 600;
-        color: #333;
+        color: var(--color-text);
     }
 
     .delivery-phone {
-        color: #555;
+        color: var(--color-text-light);
         margin-top: 4px;
         font-size: 0.95rem;
     }
@@ -103,14 +103,14 @@
     display: inline-block;
     margin-left: 0.5rem;
     font-size: 0.875rem;
-    color: #667eea;
+    color: var(--color-primary);
     font-style: italic;
 }
 
 .cancel-btn {
     padding: 0.5rem 1rem;
-    background: #ff4757;
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-white);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -119,23 +119,24 @@
 }
 
 .cancel-btn:hover {
-    background: #ee3742;
+    background: var(--color-accent-dark);
 }
 
 .add-food-btn {
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-white);
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 2rem;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background 0.2s;
 }
 
 .add-food-btn:hover {
+    background: var(--color-primary-dark);
     transform: translateY(-2px);
 }
 
@@ -157,11 +158,11 @@
 
 .food-info h3 {
     margin: 0 0 0.5rem 0;
-    color: #333;
+    color: var(--color-text);
 }
 
 .food-info p {
-    color: #666;
+    color: var(--color-text-light);
     margin: 0 0 1rem 0;
 }
 
@@ -173,9 +174,9 @@
 
 .food-meta span {
     padding: 0.25rem 0.75rem;
-    background: #f0f0f0;
+    background: var(--color-gray-light);
     border-radius: 15px;
-    color: #666;
+    color: var(--color-text-light);
 }
 
 .food-meta .available {
@@ -204,13 +205,13 @@
 }
 
 .edit-btn {
-    background: #667eea;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-white);
 }
 
 .delete-btn {
-    background: #ff4757;
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-white);
 }
 
 .edit-btn:hover,
@@ -218,17 +219,170 @@
     opacity: 0.8;
 }
 
+/* Bookings */
+.admin-bookings {
+    margin-top: 0;
+}
+
+.bookings-summary {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.summary-card {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    min-width: 140px;
+    text-align: center;
+}
+
+.summary-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+.new-bookings-alert {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+    border: 1px solid #ffc107;
+    color: #856404;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.booking-email {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+}
+
+.booking-status {
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.booking-status.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.booking-status.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.booking-status.status-completed {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.new-badge {
+    margin-left: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-white);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.booking-row-new {
+    background: #f8f4ff;
+}
+
+/* Drivers & Assign */
+.driver-cell {
+    max-width: 200px;
+}
+.driver-phone { font-size: 0.9rem; color: var(--color-text-light); }
+.assign-driver-btn,
+.unassign-driver-btn {
+    margin-top: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+.assign-driver-btn { background: var(--color-primary); color: var(--color-white); }
+.unassign-driver-btn { background: var(--color-gray-light); color: var(--color-text); }
+.driver-status {
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.driver-status.status-available { background: #d4edda; color: #155724; }
+.driver-status.status-occupied { background: #fff3cd; color: #856404; }
+.driver-status.status-offline { background: #e2e3e5; color: #383d41; }
+
+.assign-driver-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+.assign-driver-modal {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    min-width: 420px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.assign-driver-modal h3 { margin: 0 0 1rem 0; color: var(--color-text); }
+.assign-driver-modal .assign-info {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+}
+.assign-driver-modal .assign-info strong { color: var(--color-text); }
+.assign-driver-modal .form-group { margin-bottom: 1rem; }
+.assign-driver-modal label { display: block; margin-bottom: 0.35rem; font-weight: 600; }
+.assign-driver-modal select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.assign-driver-modal .no-available { color: #e74c3c; font-size: 0.95rem; margin: 0.5rem 0 0 0; }
+.assign-driver-modal .modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+.assign-driver-modal .cancel-btn { padding: 0.6rem 1.2rem; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.assign-driver-modal .save-btn { padding: 0.6rem 1.2rem; background: var(--color-primary); color: var(--color-white); border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.assign-driver-modal .save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .loading,
 .error,
 .no-data {
     text-align: center;
     padding: 3rem;
     font-size: 1.2rem;
-    color: #666;
+    color: var(--color-text-light);
 }
 
 .error {
-    color: #ff4757;
+    color: var(--color-accent);
 }
 
 @media (max-width: 968px) {

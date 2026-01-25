@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Admin from "./pages/Admin";
 import OAuthCallback from "./pages/OAuthCallback";
+import TableBooking from "./pages/TableBooking";
 import "./App.css";
 
 // Protected Route Component
@@ -51,7 +52,12 @@ const AdminRoute = ({ children }) => {
 // App Routes Component (needs to be inside AuthProvider)
 const AppRoutes = () => {
     return (
-        <Router>
+        <Router
+            future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true,
+            }}
+        >
             <div className="App">
                 <Navbar />
                 <main className="main-content">
@@ -59,6 +65,14 @@ const AppRoutes = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/menu" element={<Menu />} />
                         <Route path="/cart" element={<Cart />} />
+                        <Route
+                            path="/book-table"
+                            element={
+                                <ProtectedRoute>
+                                    <TableBooking />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route
                             path="/orders"
                             element={

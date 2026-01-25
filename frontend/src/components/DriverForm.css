@@ -1,0 +1,83 @@
+.driver-form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.driver-form-container {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  min-width: 360px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.driver-form-container h2 {
+  margin: 0 0 1.25rem 0;
+  color: var(--color-text);
+}
+
+.driver-form-container .form-group {
+  margin-bottom: 1rem;
+}
+
+.driver-form-container label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.driver-form-container input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.driver-form-container input.error {
+  border-color: var(--color-accent);
+}
+
+.driver-form-container .error-message {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  margin-top: 0.25rem;
+}
+
+.driver-form-container .form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.driver-form-container .cancel-btn {
+  padding: 0.6rem 1.2rem;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.driver-form-container .save-btn {
+  padding: 0.6rem 1.2rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.driver-form-container .save-btn:hover {
+  background: var(--color-primary-dark);
+}

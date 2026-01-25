@@ -6,6 +6,7 @@ import com.habeshabite.backend.dto.OrderRequest;
 import com.habeshabite.backend.dto.OrderResponse;
 import com.habeshabite.backend.entity.*;
 import com.habeshabite.backend.exception.OrderItem;
+import com.habeshabite.backend.repository.DriverRepository;
 import com.habeshabite.backend.repository.FoodRepository;
 import com.habeshabite.backend.repository.OrderRepository;
 import com.habeshabite.backend.repository.UserRepository;
@@ -22,11 +23,14 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final FoodRepository foodRepository;
+    private final DriverRepository driverRepository;
 
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, FoodRepository foodRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository,
+            FoodRepository foodRepository, DriverRepository driverRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.foodRepository = foodRepository;
+        this.driverRepository = driverRepository;
     }
 
     @Transactional
@@ -134,6 +138,13 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
+        if ((newStatus == Order.OrderStatus.DELIVERED || newStatus == Order.OrderStatus.CANCELLED)
+                && order.getDriver() != null) {
+            Driver d = order.getDriver();
+            d.setStatus(Driver.DriverStatus.AVAILABLE);
+            driverRepository.save(d);
+        }
+
         order.setStatus(newStatus);
         Order updated = orderRepository.save(order);
 
@@ -161,9 +172,56 @@ public class OrderService {
             return false;
         }
 
+        if (order.getDriver() != null) {
+            Driver d = order.getDriver();
+            d.setStatus(Driver.DriverStatus.AVAILABLE);
+            driverRepository.save(d);
+        }
+
         order.setStatus(Order.OrderStatus.CANCELLED);
         orderRepository.save(order);
         return true;
+    }
+
+    @Transactional
+    public OrderResponse assignDriverToOrder(Long orderId, Long driverId) {
+        if (orderId == null) throw new RuntimeException("Order ID is required");
+        if (driverId == null) throw new RuntimeException("Driver ID is required");
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        Driver driver = driverRepository.findById(driverId)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+        if (!driver.getIsActive()) throw new RuntimeException("Driver is not active");
+        if (driver.getStatus() == Driver.DriverStatus.OCCUPIED) {
+            throw new RuntimeException("Driver is already occupied with another delivery");
+        }
+        if (order.getDriver() != null) {
+            throw new RuntimeException("Order already has a driver assigned. Unassign first.");
+        }
+        if (order.getStatus() == Order.OrderStatus.DELIVERED || order.getStatus() == Order.OrderStatus.CANCELLED) {
+            throw new RuntimeException("Cannot assign driver to a delivered or cancelled order");
+        }
+        order.setDriver(driver);
+        driver.setStatus(Driver.DriverStatus.OCCUPIED);
+        driverRepository.save(driver);
+        Order updated = orderRepository.save(order);
+        return mapToResponse(updated);
+    }
+
+    @Transactional
+    public OrderResponse unassignDriverFromOrder(Long orderId) {
+        if (orderId == null) throw new RuntimeException("Order ID is required");
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        if (order.getDriver() == null) {
+            throw new RuntimeException("Order has no driver assigned");
+        }
+        Driver driver = order.getDriver();
+        order.setDriver(null);
+        driver.setStatus(Driver.DriverStatus.AVAILABLE);
+        driverRepository.save(driver);
+        Order updated = orderRepository.save(order);
+        return mapToResponse(updated);
     }
 
     private OrderResponse mapToResponse(Order order) {
@@ -186,6 +244,10 @@ public class OrderService {
                 order.getDeliveryAddress(),
                 order.getPhoneNumber(),
                 order.getCreatedAt(),
-                order.getUpdatedAt());
+                order.getUpdatedAt(),
+                order.getDriver() != null ? order.getDriver().getId() : null,
+                order.getDriver() != null ? order.getDriver().getFullName() : null,
+                order.getDriver() != null ? order.getDriver().getEmail() : null,
+                order.getDriver() != null ? order.getDriver().getPhone() : null);
     }
 }
